@@ -1,6 +1,12 @@
 name: Test
 
 on:
+  pull_request:
+    branches: [ "main" ]
+    paths-ignore:
+      - 'data/**'
+      - 'requirements.txt'
+      - 'README.md'
   workflow_dispatch:
 
 jobs:

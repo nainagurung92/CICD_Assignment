@@ -8,13 +8,6 @@ on:
       - 'requirements.txt'
       - 'README.md'
 
-  workflow_dispatch:
-     inputs:
-      Test:
-        description: 'Test workflow which will be triggered'
-        required: true
-        default: 'Test'
-
 
 permissions:
   contents: read
