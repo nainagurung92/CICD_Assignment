@@ -9,6 +9,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    needs: training  # This line indicates that this job depends on the completion of the 'training' job from Workflow A
+
     strategy:
       matrix:
         tag: [latest]
@@ -26,6 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: training
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     steps:
     - name: Do something
       run: echo "This is a standalone job"
