@@ -1,6 +1,6 @@
 name: Test
 
-on :
+on:
   pull_request:
     branches: [ "main" ]
     paths-ignore:
@@ -21,12 +21,12 @@ jobs:
 
     steps:
     - name: Pull Docker image
-      run: docker pull hub.docker.com/nainagurung92/cicd_assignment92:${{ matrix.tag }}
+      run: docker pull docker.io/nainagurung92/cicd_assignment92:${{ matrix.tag }}
 
     - name: Run Docker container
-      run: docker run hub.docker.com/nainagurung92/cicd_assignment92:${{ matrix.tag }}
+      run: docker run docker.io/nainagurung92/cicd_assignment92:${{ matrix.tag }}
 
     - name: Check score
       run: |
-        score=$(docker run hub.docker.com/nainagurung92/cicd_assignment92:${{ matrix.tag }} | awk '{print $NF}')
-        if [[ `echo "$score 0.50" | awk '{print ($1 < $2)}'` == 1 ]]; then echo "Insufficient Accuracy" && exit 1; fi
+        score=$(docker run docker.io/nainagurung92/cicd_assignment92:${{ matrix.tag }} | awk '{print $NF}')
+        if (( $(echo "$score >= 0.50" | bc -l) )); then echo "Sufficient Accuracy"; else echo "Insufficient Accuracy" && exit 1; fi

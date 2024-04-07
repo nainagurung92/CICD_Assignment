@@ -1,6 +1,6 @@
 name: Train
 
-on :
+on:
   pull_request:
     branches: [ "main" ]
     paths-ignore:
@@ -29,7 +29,7 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: |
-          hub.docker.com/nainagurung92/cicd_assignment92:latest
+          docker.io/nainagurung92/cicd_assignment92:latest
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
