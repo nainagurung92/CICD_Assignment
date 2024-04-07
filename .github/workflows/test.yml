@@ -17,5 +17,6 @@ jobs:
     - name: Check score
       run: |
         score=$(docker run docker.io/nainagurung92/cicd_assignment92:${{ matrix.tag }} | awk '{print $NF}')
+        echo "score : $score"
         if (( $(echo "$score >= 0.50" | bc -l) )); then echo "Sufficient Accuracy"; else echo "Insufficient Accuracy" && exit 1; fi
 
