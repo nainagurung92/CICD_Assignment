@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    name: Test the package
+    name: Test
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -20,10 +20,10 @@ jobs:
     - name: Wait for Train checks to succeed
       uses: lewagon/wait-on-check-action@v1.3.4
       with:
-        ref: ${{ github.ref }}
-        running-workflow-name: 'Test the package'
+        ref: main # ${{ github.ref }}
+        check-name: training
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        wait-interval: 10
+        wait-interval: 70
 
     - name: Pull Docker image
       run: docker pull docker.io/nainagurung92/cicd_assignment92:${{ matrix.tag }}
