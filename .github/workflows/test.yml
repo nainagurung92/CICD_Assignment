@@ -17,12 +17,10 @@ jobs:
         tag: [latest]
 
     steps:
-    - name: Wait for Train checks to succeed
+    - name: Wait for all checks to succeed
       uses: lewagon/wait-on-check-action@v1.3.4
       with:
-        checks: Train
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        wait-interval: 70
 
     - name: Pull Docker image
       run: docker pull docker.io/nainagurung92/cicd_assignment92:${{ matrix.tag }}
