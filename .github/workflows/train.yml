@@ -14,7 +14,6 @@ permissions:
 
 jobs:
   training:
-    name: Run Train
     runs-on: ubuntu-latest
 
     steps:
