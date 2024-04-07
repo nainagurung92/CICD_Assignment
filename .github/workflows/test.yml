@@ -1,0 +1,36 @@
+name: Test
+
+on:
+  pull_request:
+    branches: [ "main" ]
+    paths-ignore:
+      - 'data/**'
+      - 'requirements.txt'
+      - 'README.md'
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        tag: [latest]
+
+    steps:
+    - name: Wait for other checks to succeed
+      uses: lewagon/wait-on-check-action@v1.3.4
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+        check-name: training
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        wait-interval: 1
+
+    - name: Pull Docker image
+      run: docker pull docker.io/nainagurung92/cicd_assignment92:${{ matrix.tag }}
+
+    - name: Check score
+      run: |
+        score=$(docker run docker.io/nainagurung92/cicd_assignment92:${{ matrix.tag }} | awk '{print $NF}')
+        echo "score : $score"
+        if (( $(echo "$score >= 0.50" | bc -l) )); then echo "Sufficient Accuracy"; else echo "Insufficient Accuracy" && exit 1; fi
+
