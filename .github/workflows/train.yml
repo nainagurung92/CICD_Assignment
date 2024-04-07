@@ -38,10 +38,3 @@ jobs:
         tags: |
           docker.io/nainagurung92/cicd_assignment92:latest
 
-    - name: Train Completed, Trigger Workflow Test
-      run: |
-        curl -X POST \
-          -H "Authorization: token ${{ secrets.ACTIONS_KEY }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/nainagurung92/CICD_Assignment/actions/workflows/test.yml/dispatches \
-          -d '{"ref":"scenario1-bothFail"}'

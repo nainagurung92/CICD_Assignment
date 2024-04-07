@@ -7,7 +7,6 @@ on:
       - 'data/**'
       - 'requirements.txt'
       - 'README.md'
-  workflow_dispatch:
 
 jobs:
   test:
@@ -17,6 +16,14 @@ jobs:
         tag: [latest]
 
     steps:
+    - name: Wait for Train checks to succeed
+        uses: lewagon/wait-on-check-action@v1.3.4
+        with:
+          ref: ${{ github.ref }}
+          running-workflow-name: 'Train'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+
     - name: Pull Docker image
       run: docker pull docker.io/nainagurung92/cicd_assignment92:${{ matrix.tag }}
 
