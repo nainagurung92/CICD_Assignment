@@ -9,6 +9,19 @@ on:
       - 'README.md'
 
 jobs:
+  wait:
+  runs-on: ubuntu-latest
+  timeout-minutes: 120
+  steps:
+    - name: Wait for other checks to succeed
+      uses: lewagon/wait-on-check-action@v1.1.1
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+        check-name: training
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        wait-interval: 60
+
+
   test:
     name: Test
     runs-on: ubuntu-latest
@@ -17,11 +30,6 @@ jobs:
         tag: [latest]
 
     steps:
-    - name: Wait for all checks to succeed
-      uses: lewagon/wait-on-check-action@v1.3.4
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Pull Docker image
       run: docker pull docker.io/nainagurung92/cicd_assignment92:${{ matrix.tag }}
 
