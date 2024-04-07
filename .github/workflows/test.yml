@@ -1,10 +1,6 @@
 name: Test
 
-on:
-  workflow_run:
-    workflows: ["Train"]
-    types:
-      - completed
+on: [repository_dispatch]
 
 jobs:
   test:
