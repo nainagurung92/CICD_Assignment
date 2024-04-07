@@ -19,7 +19,3 @@ COPY test.py .
 RUN python3 train.py
 
 CMD ["python3", "test.py"]
-
-
-
-
