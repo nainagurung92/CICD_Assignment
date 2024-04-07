@@ -9,8 +9,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    needs: training  # This line indicates that this job depends on the completion of the 'training' job from Workflow A
-
     strategy:
       matrix:
         tag: [latest]
@@ -24,11 +22,3 @@ jobs:
         score=$(docker run docker.io/nainagurung92/cicd_assignment92:${{ matrix.tag }} | awk '{print $NF}')
         if (( $(echo "$score >= 0.50" | bc -l) )); then echo "Sufficient Accuracy"; else echo "Insufficient Accuracy" && exit 1; fi
 
-  standalone-job:
-    runs-on: ubuntu-latest
-    needs: training
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-
-    steps:
-    - name: Do something
-      run: echo "This is a standalone job"
