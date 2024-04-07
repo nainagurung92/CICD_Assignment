@@ -13,8 +13,8 @@ permissions:
   contents: read
 
 jobs:
-  name: training
   training:
+    name: training
     runs-on: ubuntu-latest
 
     steps:
